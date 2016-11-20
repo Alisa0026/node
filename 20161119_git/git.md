@@ -271,5 +271,41 @@ echo hello world > index.txt
 ```
 echo hello world123 >> index.txt
 ```
+## 打标签
 
+    > 参考 https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE
+    
+    > 视频 source tree 打标签 http://www.acfun.tv/v/ac2773975
+    
+    > 讲视频的网站 http://www.crazyphper.com/
 
+- 增加标签
+```
+git tag 版本号(v1.0.0)
+```
+- 删除标签
+```
+git tag -d v1.1.0 删除分支
+```
+- 根据标签检出
+```
+git checkout [tag_name] 
+git checkout v1.1.0
+```
+- 查看相应标签的版本信息，并连同显示打标签时的提交对象。
+```
+git show 
+git show v1.4
+```
+- 分享标签
+    > 默认情况下，git push 并不会把标签传送到远端服务器上，只有通过显式命令才能分享标签到远端仓库。其命令格式如同推送分支，运行 git push origin [tagname] 即可： 
+
+    ```
+    git push origin v1.5
+    
+    ```
+    > 如果要一次推送所有本地新增的标签上去，可以使用 --tags 选项：
+
+    ```
+    git push origin --tags
+    ```
