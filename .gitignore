@@ -16,9 +16,9 @@ lib-cov
 coverage
 
 # nyc test coverage
+# Grunt intermediate storage (http://gruntjs.com/creating-plugins#sto
 .nyc_output
-
-# Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
+ring-task-files)
 .grunt
 
 # node-waf configuration
