@@ -101,6 +101,7 @@ console.log(module.paths);
 ```
 npm unpublish --force
 ```
+> 只有发布包时才必须要切换到npm上
 
 ## 源npm 切换源切换到国内
 - cnpm taobao
