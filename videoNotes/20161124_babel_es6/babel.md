@@ -116,7 +116,7 @@ babel --help
 npm install babel-preset-react --save-dev
 ```
 - 需要安装一些预设
-```
+```json
 npm install react react-dom --save
 在.babelrc配置
 {
@@ -130,7 +130,7 @@ npm install react react-dom --save
 npm install babel-runtime babel-plugin-transform-runtime --save-dev
 ```
 > 下载后在.babelrc中做配置
-```
+```json
 {
         "plugins":["transform-runtime"]
 }
@@ -197,7 +197,7 @@ $ npm install --save-dev babel-preset-stage-2
 ```
 
 然后添加进你的 .babelrc 配置文件，这样就能使用es7语法了
-```
+```json
  {
     "presets": [
       "es2015",
@@ -206,6 +206,18 @@ $ npm install --save-dev babel-preset-stage-2
     ],
     "plugins": []
   }
+```
+
+### 7、babel-preset-es2015-loose 这个预设编译后代码更像手写的
+```
+npm install babel-preset-es2015-loose --save-dev
+```
+> 不建议实际环境中使用，一些api编译后可能在浏览器中不能运行
+```json
+在.babelrc配置
+{
+        "presets":["es2015-loose","react"]
+}
 ```
 
 ## 三、gulp + babel 结合使用
@@ -242,8 +254,3 @@ gulp.task('default',["babel"]); //配置一个默认的
 npm run dev
 ```
 > 效果其实和babel之前是一样的，只是这个是glup执行的
-
-
-
-
-
