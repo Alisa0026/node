@@ -1,7 +1,12 @@
 var fs = require('fs');
 //创建目录必须保证父级存在，不存在无法创建
 //fs.mkdirSync('a/b/c/d');
+//异步创建 循环创建需要递归
+fs.mkdir('a',function(err){
+    //是否成功
+});
 
+//同步创建目录
 function mkdirPath(path){
     var arr = path.split('/');
     var _path = "";
@@ -29,7 +34,12 @@ function mkdirPath(path){
 }
 //mkdirPath('fs/a');
 
-
 //判断一个文件是否存在
 var flag = fs.existsSync('fs/a');
 console.log(flag);
+
+fs.exists('a/b',function(){
+    //exists 是否存在
+});
+
+//作业：异步创建目录
