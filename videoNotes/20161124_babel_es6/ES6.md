@@ -68,7 +68,7 @@ Point.prototype.toString = function () {
 ```
 ES6中添加了对类的支持，引入了class关键字（其实class在JavaScript中一直是保留字，目的就是考虑到可能在以后的新版本中会用到，现在终于派上用场了）。
 
-```
+```javascript
 //类的定义
 class Animal {
     //ES6中新型构造器
