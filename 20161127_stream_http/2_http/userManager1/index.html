@@ -27,6 +27,17 @@
         </ul>
     </div>
     <script>
+        //删除
+        function delUser(userid){
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST",'/delUser',true);
+            xhr.responseType = "json"; //设置响应类型
+            xhr.onload = function(){
+                showList(xhr.response);
+            };
+            xhr.send(JSON.stringify({id:userid}));
+        }
+
         //注册
         var oBtn = document.querySelector(".btn");
         oBtn.addEventListener("click",function(){
@@ -47,11 +58,12 @@
             var str = "";
             data.forEach(function(user){
                 str += `<li class="list-group-item">用户名：${user.name} 密码：${user.password}
-                        <button class="btn btn-danger pull-right btn-xs">删除</button>
+                        <button class="btn btn-danger pull-right btn-xs" onclick="delUser(${user.id})">删除</button>
                     </li>`
             });
             oUl.innerHTML = str;
         }
+
         //创建
         var xhr = new XMLHttpRequest();
         //开启请求

@@ -18,14 +18,10 @@ http.createServer(function (req,res) {
 
     //减少冗余代码
     if(pathName == '/'){
-
         res.setHeader('Content-Type','text/html;charset=utf8');
         fs.createReadStream('./index.html').pipe(res);
-
     }else if(pathName == '/getUsers'){
-
         res.end(JSON.stringify(users));
-
     }else if(pathName == '/addUser'){
         var result = '';
 
@@ -33,11 +29,28 @@ http.createServer(function (req,res) {
             result += data
         });
 
-        req.on('end', function (data) {
+        req.on('end', function () {
             var user = JSON.parse(result);
             user.id = Math.random();
             users.push(user);
-            console.log(JSON.stringify(users))
+            res.end(JSON.stringify(users));
+        });
+
+    }else if(pathName == '/delUser'){
+        var _data = '';
+
+        req.on('data', function (data) {
+            _data = data
+        });
+
+        req.on('end', function () {
+            var userid = JSON.parse(_data);
+
+            users = users.filter(function(item){
+                //如果返回true 删除
+                return item.id != userid.id
+            });
+
             res.end(JSON.stringify(users));
         });
 
