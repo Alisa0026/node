@@ -16,18 +16,18 @@ var ws = fs.createWriteStream('./name1.txt',{
     highWaterMark:1
 });
 rs.on('data',function(data){
-    var flag = ws.write(data);
+    var flag = ws.write(data); //向可写流中写入内容
     console.log(data,flag);
-    if(!flag){
-        rs.pause();
+    if(!flag){ //如果无法写入
+        rs.pause(); //先不读了
     }
 });
 
-ws.on('drain', function () {
-    rs.resume();
+ws.on('drain', function () { //写完后触发的事件
+    rs.resume(); //恢复可读流
 });
 
-rs.on("end",function () {
+rs.on("end",function () { //读完后，将可写流关闭
     ws.end();
 });
 
