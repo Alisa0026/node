@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+    <title>bootstrap</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="list-group">
+                    <%
+                        users.forEach(function(user){
+                    %>
+                        <li class="list-group-item"><%=user.id%>:<%=user.name%></li>
+                    <%
+                        })
+                    %>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
