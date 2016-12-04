@@ -67,11 +67,12 @@ app.get('/singin', function (req,res) {
 app.post('/singin', function (req,res) {
     var user = req.body;
 
-    var items = users.filter(function (item) {
+    var items = users.find(function (item) {
 
         return item.username == user.username && item.password == user.password
     });
 
+    //如果用户存在
     if(items){
         req.session.user = user;
         res.redirect('welcome');
@@ -82,7 +83,6 @@ app.post('/singin', function (req,res) {
 
 //欢迎
 app.get('/welcome', function (req,res) {
-    console.log(req.session.user);
     res.render('welcome',{user:req.session.user});
 });
 
