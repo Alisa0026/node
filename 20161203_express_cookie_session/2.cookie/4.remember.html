@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body onload="fill()">
+<form action="">
+    用户名 <input type="text" name="username" id="username"/>
+</form>
+<script>
+    function fill(){
+        var username = getCookie("username");
+        console.log(username)
+        if(username){
+            document.querySelector('#username').value = username;
+        }else{
+            username = prompt("请输入用户名");
+            document.querySelector('#username').value = username;
+            setCookie("username",username);
+        }
+    }
+
+    function setCookie(key,value){
+        document.cookie = `${key}=${value}`;
+    }
+
+    function getCookie(key){
+        var cookie = document.cookie;
+        cookies = cookie.split('; ');
+
+        for(var i = 0;i < cookies.length;i++){
+            if(cookies[i].split('=')[0] == key){
+                return cookies[i].split('=')[1];
+            }
+        }
+    }
+</script>
+</body>
+</html>

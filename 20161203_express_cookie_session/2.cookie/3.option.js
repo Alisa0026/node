@@ -26,4 +26,13 @@ app.get('/read2', function (req,res) {
     res.send(req.cookies);
 });
 
+app.get('/visit', function (req,res) {
+    var count = 1;
+    if(req.cookies.count){
+        count = parseInt(req.cookies.count) + 1
+    }
+    res.cookie('count',count);
+    res.send(`欢迎你第${count}次光临`);
+});
+
 app.listen(8080);

@@ -1,5 +1,6 @@
 # cookie
-
+https://zhufengnodejs.github.io/doc/html/node%E8%BF%9B%E9%98%B6/cookie.html
+https://zhufengnodejs.github.io/doc/html/node%E8%BF%9B%E9%98%B6/session.html
 ##1、设置cookie
 - 客户端第一次访问服务器的时候服务器通过响应头向客户端发送Cookie,属性之间用分号空格分隔
 
