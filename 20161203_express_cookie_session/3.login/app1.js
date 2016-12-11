@@ -67,7 +67,6 @@ app.post('/singup', function (req,res) {
         users.push(user);
         res.redirect('singin');
     }
-
 });
 //登录
 app.get('/singin', function (req,res) {

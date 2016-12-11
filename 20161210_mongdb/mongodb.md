@@ -26,19 +26,65 @@ sudo mkdir -p /data/db
 ```javascript
 sudo mongod &
 ```
+mac 如何 启动数据库
+```javascript
+sudo mongod
+```
 
 ### 四、如何在命令行客户端中查找数据
-显示 当前的服务中有多少个数据库
+#### 1.数据库操作
+##### 1.1 显示 当前的服务中有多少个数据库
 ```javascript
 show dbs;
 ```
-切换到指定数据库下面
+##### 1.2 切换到指定数据库下面
 ```javascript
 use 201610node
 ```
-查看当前数据库下面集合的全部文档
+##### 1.3 查看当前使用的数据库 
 ```javascript
-db.person.find();
+db 或 db.getName()
+```
+> 注：db代表的是当前数据库 也就是person这个数据库
+
+##### 1.4 删除数据库
+```javascript
+db.dropDatabase()
+```
+
+#### 2.集合操作
+##### 2.1 查看数据库下的集合
+```javascript
+show collections
+```
+
+##### 2.2 查看当前数据库下worker集合的所有文档
+```javascript
+db.collection_name.find()
+
+db.worker.find() //worker是集合名称
+```
+
+##### 2.3 删除数据
+
+- 语法：
+```javascript
+db.collection.remove(
+   <query>,
+   {
+     justOne: <boolean>
+   }
+)
+```
+> query :（可选）删除的文档的条件。
+  justOne : （可选）如果设为 true 或 1，则只删除匹配到的多个文档中的第一个
+  
+- 命令：
+```javascript
+<!--按照id删除-->
+db.collection_name.remove({"_id":ObjectId(id)});
+<!--删除person集合里name是xiaoHong的第一条数据-->
+db.person.remove({name:"xiaoHong"},1)
 ```
 
 ## Mongoose 操作
