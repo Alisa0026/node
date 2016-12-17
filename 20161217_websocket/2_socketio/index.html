@@ -14,9 +14,7 @@
                     <h3>欢迎来到聊天室</h3>
                 </div>
                 <div class="panel-body">
-                    <ul class="list-group">
-                        <li class="list-group-item">欢迎来到聊天室</li>
-                    </ul>
+                    <ul class="list-group" id="messages"></ul>
                 </div>
                 <div class="panel-footer">
                     <div class="row">
@@ -24,7 +22,7 @@
                             <input type="text" class="form-control" name="content" id="content">
                         </div>
                         <div class="col-md-2">
-                            <button class="btn btn-primary btn-md" id="submit" type="button">发言</button>
+                            <button class="btn btn-primary btn-md" onclick="send()" id="submit" type="button">发言</button>
                         </div>
                     </div>
                 </div>
@@ -35,10 +33,10 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
 
-    var oBtn = document.getElementById("submit");
-    var oInput = document.getElementById("content");
-    var oUl = document.querySelector('.list-group');
-    var msg = "";
+//    var oBtn = document.getElementById("submit");
+//    var oInput = document.getElementById("content");
+//    var oUl = document.querySelector('.list-group');
+//    var msg = "";
 
     //引入这个脚本后会在window下增加一个io的全局变量，
     // 通过调用它并传入路径，可以连接socket.io服务器
@@ -46,7 +44,10 @@
 
     socket.on('connect', function () {
         console.log('连接服务器成功');
-        // socket.send('111');
+
+        //发射一个自定义的事件叫getAllMessages
+        socket.emit('getAllMessages');
+
     });
 
     socket.on('disconnect',function () {
@@ -54,20 +55,41 @@
 
     });
 
-    socket.on('message',function (message) {
-        console.log('client',msg);
+    socket.on('message',function (messageObj) {
+        console.log('client',messageObj);
+
         var node = document.createElement("li");
-        node.innerHTML = msg;
+        node.innerHTML = `${messageObj.username}: ${messageObj.content} <span class="pull-right">${messageObj.createAt.toLocaleString()}</span>`;
         node.className = "list-group-item";
-        oUl.appendChild(node);
+
+        document.querySelector('#messages').appendChild(node);
     });
 
+    socket.on('allMessages',function (messages) {
+        var html = '';
+        messages.forEach(function(messageObj){
+//          html += `<li class="list-group-item">${message}</li>`;
+            html += `<li class="list-group-item">${messageObj.username}: ${messageObj.content} <span class="pull-right">${messageObj.createAt.toLocaleString()}</span></li>`;
+        });
 
+/*        var html = messages.map(function(message){
+            return `<li class="list-group-item">${message}</li>`
+        }).join('');*/
 
-    oBtn.onclick = function(){
-        msg = oInput.value;
-        socket.send(msg);
-    };
+        console.log('allMessages',html);
+
+        document.querySelector('#messages').innerHTML = html;
+    });
+
+    function send(){
+        //先得到文本框的内容
+        var oInput = document.querySelector("#content");
+        var content = oInput.value;
+
+        //向服务器发送消息
+        socket.send(content);
+        oInput.value = "";
+    }
 </script>
 </body>
 </html>

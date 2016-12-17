@@ -32,16 +32,42 @@ var io = require('socket.io')(server);
  * 五、聊天信息存入mongodb持久化
  * 六、显示房间在线人员
  */
-
+var messages = [];
 //websocket服务器监听客户端青丘，当有请求到来的时候
 io.on('connection', function (socket) {
+    var username;
+
     //进入此函数就表示客户端已经连接成功了
     //监听客户端发过来的消息
     socket.on('message', function (message) {
+
         console.log('server',message);
-        //服务器向客户端发消息
-        //socket.send('服务器确认:'+ message);
-        io.emit('message',message);
+
+        //username设置过了
+        if(username){
+
+            //服务器把消息放在消息数组里
+            messages.push({username, content: message, createAt: new Date()});
+
+            //服务器向客户端发消息
+            //socket.send('服务器确认:'+ message);
+            //向所有连接的客户端发送消息 用户名、内容、时间
+            io.emit('message',{username, content: message, createAt: new Date()});
+
+        }else{
+            //第一次没有username进行设置
+            username = message;
+            io.emit('message',{username:'系统', content: `欢迎${username}进入聊天室`, createAt: new Date()});
+        }
+    });
+
+    //在服务器监听客户端发过来要求获得所有的消息事件,发回所有消息数组
+    socket.on('getAllMessages', function () {
+
+        //服务器上客户端发射一件allMessages事件,
+        socket.emit('allMessages',messages);
+
+        socket.send({username:'系统', content: '请输入昵称', createAt: new Date()});
     })
 });
 
