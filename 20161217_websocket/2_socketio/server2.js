@@ -33,10 +33,6 @@ var io = require('socket.io')(server);
  * 六、显示房间在线人员
  */
 var messages = [];
-
-//搞一个对象存所有的用户名
-var sockets = {};
-
 //websocket服务器监听客户端青丘，当有请求到来的时候
 io.on('connection', function (socket) {
     var username;
@@ -49,43 +45,19 @@ io.on('connection', function (socket) {
 
         //username设置过了
         if(username){
-            var reg = /^@([^ ]+) (.+)/; //非空格的字符
 
-            var result =  message.match(reg);
+            //服务器把消息放在消息数组里
+            messages.push({username, content: message, createAt: new Date()});
 
-            if(result){ //如果有值是私聊
-                var toUser = result[1]; //想私聊的对方的用户名找到对方的socket
-                var content = result[2]; //私聊内容
-
-                sockets[toUser].send({
-                    username : `<span class="user">${username}</span> 对你说：`,
-                    content ,
-                    createAt: new Date()
-                });
-
-                socket.send({
-                    username : `你对 <span class="user">${toUser}</span> 说：`,
-                    content ,
-                    createAt: new Date()
-                });
-
-            }else{
-                //服务器把消息放在消息数组里
-                messages.push({username:`<span class="user">${username}</span>`, content: message, createAt: new Date()});
-
-                //向所有连接的客户端发送消息 用户名、内容、时间
-                io.emit('message',{username:`<span class="user">${username}</span>`, content: message, createAt: new Date()});
-            }
+            //服务器向客户端发消息
+            //socket.send('服务器确认:'+ message);
+            //向所有连接的客户端发送消息 用户名、内容、时间
+            io.emit('message',{username, content: message, createAt: new Date()});
 
         }else{
-
             //第一次没有username进行设置
             username = message;
-
-            //将此用户和此socket的对应关系存起来
-            sockets[username] = socket;
-
-            io.emit('message',{username:'<span class="user">系统</span>', content: `欢迎<span class="user">${username}</span>进入聊天室`, createAt: new Date()});
+            io.emit('message',{username:'系统', content: `欢迎${username}进入聊天室`, createAt: new Date()});
         }
     });
 
@@ -95,7 +67,7 @@ io.on('connection', function (socket) {
         //服务器上客户端发射一件allMessages事件,
         socket.emit('allMessages',messages);
 
-        socket.send({username:'<span class="user">系统</span>', content: '请输入昵称', createAt: new Date()});
+        socket.send({username:'系统', content: '请输入昵称', createAt: new Date()});
     })
 });
 
