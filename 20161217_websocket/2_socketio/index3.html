@@ -17,13 +17,7 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    <h3>请选择房间</h3>
-                    <nav>
-                        <ul class="pagination">
-                            <li onclick="join(event,'tianya')"><a href="javascript:;">天涯社区</a></li>
-                            <li onclick="join(event,'sina')"><a href="javascript:;">新浪社区</a></li>
-                        </ul>
-                    </nav>
+                    <h3>欢迎来到聊天室</h3>
                 </div>
                 <div class="panel-body">
                     <ul class="list-group" id="messages" onclick="chat(event)"></ul>
@@ -117,20 +111,6 @@
         if(event.keyCode == 13){
             send();
         }
-    }
-
-    //加入房间
-    function join(event,room){
-
-        var lis = event.target.parentNode.parentNode.getElementsByTagName('li');
-
-        for(var i=0;i<lis.length;i++){
-            lis[i].className = '';
-        }
-
-        event.target.parentNode.className = 'active';
-
-        socket.emit('join',room);
     }
 </script>
 </body>

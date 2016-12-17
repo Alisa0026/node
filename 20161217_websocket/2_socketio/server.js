@@ -39,13 +39,16 @@ var sockets = {};
 
 //websocket服务器监听客户端青丘，当有请求到来的时候
 io.on('connection', function (socket) {
-    var username;
+
+    var username; //此用户的用户名
+    var currentRoom;//当前socket对应的当前房间
+
 
     //进入此函数就表示客户端已经连接成功了
     //监听客户端发过来的消息
     socket.on('message', function (message) {
 
-        console.log('server',message);
+        //console.log('server',message);
 
         //username设置过了
         if(username){
@@ -73,8 +76,15 @@ io.on('connection', function (socket) {
                 //服务器把消息放在消息数组里
                 messages.push({username:`<span class="user">${username}</span>`, content: message, createAt: new Date()});
 
-                //向所有连接的客户端发送消息 用户名、内容、时间
-                io.emit('message',{username:`<span class="user">${username}</span>`, content: message, createAt: new Date()});
+                console.log('currentRoom',currentRoom);
+
+                if(currentRoom){
+                    //向所有连接的客户端发送消息 用户名、内容、时间
+                    io.in(currentRoom).emit('message',{username:`<span class="user">${username}</span>`, content: message, createAt: new Date()});
+                }else{
+                    //向所有连接的客户端发送消息 用户名、内容、时间
+                    io.emit('message',{username:`<span class="user">${username}</span>`, content: message, createAt: new Date()});
+                }
             }
 
         }else{
@@ -96,6 +106,15 @@ io.on('connection', function (socket) {
         socket.emit('allMessages',messages);
 
         socket.send({username:'<span class="user">系统</span>', content: '请输入昵称', createAt: new Date()});
+    });
+
+    //监听客户端，让服务器进入某个房间的事件
+    socket.on('join', function (room) {
+        //把当前的房间名缓存在currentRoom中
+        currentRoom = room;
+
+        //让socket进入某个房间
+        socket.join(room);
     })
 });
 
