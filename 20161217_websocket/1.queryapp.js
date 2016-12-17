@@ -13,7 +13,7 @@ app.get('/clock', function (req,res) {
     * Allow-Headers 跨域请求的请求头
     * */
     var now = Date.now();
-    //console.log(now - last);
+    console.log(now - last);
     last = now;
 
     res.setHeader('Access-Control-Allow-Origin','http://localhost:63342');
