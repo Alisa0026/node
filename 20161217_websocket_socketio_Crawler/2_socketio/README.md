@@ -1,4 +1,4 @@
-## Socket.id
+## Socket.io
 
 ### 1.安装模块
 ```javascript
