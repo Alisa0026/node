@@ -17,3 +17,6 @@ npm install async request cheerio express ejs mongoose --save
 ### 2.3 整合在一起并去重 main.js
 
 ### 2.4 写一个服务，获取电影列表数组然后展示 sever.js 和 index.html
+
+
+

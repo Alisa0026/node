@@ -81,3 +81,53 @@ e.emit('click');
 </script>
 ```
 
+## 项目部署
+华北 1 可用区 B	
+115.28.169.86(公)
+10.144.164.116(内)
+
+201610Node
+
+### 购买一台阿里云
+https://www.aliyun.com
+
+https://ecs.console.aliyun.com
+
+### 连接服务
+```javascript
+xshell 新建连接
+ssh root@123.57.143.189
+```
+
+### 安装ubuntu系统
+```javascript
+更新安装源
+apt-get update
+```
+
+### 安装mongodb
+```javascript
+apt-get install mongodb
+```
+
+### 安装node
+https://nodejs.org/en/download/package-manager
+```javascript
+apt-get install -y curl
+curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+apt-get install nodejs
+```
+
+### 安装mysql
+```javascript
+apt-get install mysql-server
+apt-get install mysql-clientz
+apt-get install libmysqlclient-dev
+```
+
+## 布署静态项目
+https://zhufengnodejs.github.io/doc/html/node%E8%AF%BE%E7%A8%8B/%E7%8F%A0%E5%B3%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%B8%83%E7%BD%B2.html
+
+### FileZilla客户端软件使用方法
+http://jingyan.baidu.com/article/f3ad7d0f1f7e7509c3345b38.html
+https://filezilla-project.org/download.php?platform=win32
